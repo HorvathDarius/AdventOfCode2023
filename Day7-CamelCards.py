@@ -10,12 +10,11 @@ card_value_mapping = {
     '8': '8',
     '9': '9',
     'T': 'A',
-    'J': 'B',
+    'J': '(',
     'Q': 'C',
     'K': 'D',
     'A': 'E'
 }
-
 
 @dataclass
 class Hand:
@@ -23,9 +22,8 @@ class Hand:
     value: int
     type: int=-1
 
-
-def find_type(hand: Hand):
-    counts = [hand.cards.count(card) for card in hand.cards]
+def find_type(cards):
+    counts = [cards.count(card) for card in cards]
 
     if 5 in counts:
         return 6
@@ -42,17 +40,27 @@ def find_type(hand: Hand):
     return 0
 
 
-with open('Day7-CamelCards.txt', "r") as file:
+def find_type_special(cards):
+    if "(" in cards:
+        vals = []
+        for card in "23456789ACDE":
+            vals.append(find_type(cards.replace("(", card)))
+        return max(vals)
+    else:
+        return find_type(cards)
+
+
+with open("Day7-CamelCards.txt", "r") as file:
     content = file.read()
 
 hands = []
 for line in content.splitlines():
     tmp = line.split()
     hand=Hand(
-        cards = ''.join(card_value_mapping.get(char, char) for char in tmp[0]),
-        value = int(tmp[1])
+        cards= ''.join(card_value_mapping.get(char, char) for char in tmp[0]),
+        value=int(tmp[1])
     )
-    hand.type = find_type(hand)
+    hand.type = find_type_special(hand.cards)
     hands.append(hand)
 
 hands.sort(key=lambda hand: (hand.type, hand.cards))
