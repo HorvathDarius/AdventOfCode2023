@@ -145,9 +145,5 @@ while grid[row][col] != 0:
         else:
             break
 
-
-# for row in grid:
-#     print(row)
-# print(imprint_number)
 print(f"Final number - {int(imprint_number / 2)}")
 
