@@ -3,10 +3,10 @@ def find_mirror(grid):
         above = grid[:r][::-1]
         below = grid[r:]
 
-        above = above[:len(below)]
-        below = below[:len(above)]
+        # above = above[:len(below)]
+        # below = below[:len(above)]
 
-        if above == below:
+        if sum(sum(0 if a == b else 1 for a, b in zip(x, y)) for x, y in zip(above, below)) == 1:
             return r
 
     return 0
