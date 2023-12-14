@@ -1,6 +1,5 @@
 lines = open("Day14-ParabolicReflectorDish.txt").read().splitlines()
 
-# print(lines)
 grid = []
 for line in lines:
     grid.append([*line])
@@ -13,7 +12,6 @@ for line in range(1, len(grid)):
                 grid[pos][rock] = "."
                 grid[pos - 1][rock] = "O"
                 pos -= 1
-
 
 result = 0
 for line in grid:
